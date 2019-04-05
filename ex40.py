@@ -1,3 +1,5 @@
-import stuff
+from stuff import tree
 
-print(stuff.apple())
+plant = tree()
+print(plant.apple())
+print(plant.tangerine)
