@@ -33,13 +33,6 @@ class User(Player):
 		pass
 
 
-
-class Alien(Player):
-
-	def __init__(self):
-		self.name = 
-
-
 class Weapon:
 
 	def __init__(self,
@@ -160,38 +153,116 @@ class LaserWeaponArmy(Scene):
 				must place it in the right spot.
 			"""))
 			return "the_bridge"
-		elif:
-			print(dedent("""
-			"""))
 
+		else:
+			print(dedent("""
+				The lock buzzes on last time and then you hear a sickening melting sound
+				as the mechanism is fused together. You decide to sit there, and finally the
+				Gothons blow up the ship from their ship and you die.
+			"""))
+			return "death"
 
 
 class TheBridge(Scene):
 	
 	def enter(self):
-		pass
+		print(dedent("""
+			You burst onto the Bridge with the neutron destruct bomb under your arm and
+			surprise 5 Gothons who are trying to take control of the ship. Each of them has
+			an even uglier clown costume than the last. They haven't pulled their weapons out yet,
+			as they see the active bomb under your arm and don't want ot set it off.
+			
+			Options:
+			1) throw the bomb
+			2) slowly place the bomb
 
+		"""))
+
+		action = input("> ")
+
+		if action == "throw the bomb" or action == "1":
+			print(dedent(""" 
+				In a panic you throw the bombat the group of Gothons and make a leap for the door.
+				Right as you drop it a gothon shoots you right in the back killing you.
+				As you die, you see another Gothon frantically trying to disarm the bomb. You die knowing that they will
+				probably blow up when it goes off.
+			"""))
+			return "Game Over!"
+		elif action == "slowly place the bomb" or action == "2":
+			print(dedent(""" 
+				You point your blaster at the bomb under your arm and
+				the Gothons put their hands up and start to sweat.
+				You inch backwards to the door, open it, and then carefully place the bomb
+				on the floor, pointing your blaster at it. You then jump back through the door,
+				punch the close button and blast the lock so the Gothons can't get out.
+				Now that the bomb is placed you run to the nearest escape pod to get off this tin can.
+			"""))
+			return "escape_pod"
+		else:
+			print("DOES NOT COMPUTE")
+			return "the_bridge"
 
 class EscapePod(Scene):
 	
 	def enter(self):
-		pass
+		print(dedent("""
+			You rush through the ship desperately trying to make it to the escape pod
+			before the whole ship explodes. It seems like hardly any Gothons are on the ship,
+			so your run is clear of interference. You get to the chamber with the escape pods,
+			and now need to pick one to take. Some of them could be damaged but you don't have time to look.
+			There's 5 pods, which one do you take?
+
+			Options:
+			1 - 5
+		"""))
+		good_pod = str(randint(1, 5))
+		guess = input("[pod #]> ")
+
+		if guess == good_pod:
+			print(dedent(f""" 
+				You jump into pod {guess} and hit the eject button.
+				The pod escapes out into the void of space, then implodes
+				as the hull ruptures, crushing your body into jam jelly.
+			"""))
+			return "Game Over!"
+		else:
+			print(dedent(f"""
+				You jump into pod {guess} and hit the eject button.
+				The pod easily slides out into space heading to the planet below.
+				As it flies to the planet, you look back and see your ship implode
+				then explode like a bright star, taking out the Gothon ship at the same time.
+
+				YOU WON!
+			"""))
+			return "Game Over!"
+
+class Finished(Scene):
+
+	def enter(self):
+		print("GOOD JOB! Game OVER!")
+		return "Game Over!"
 
 
 class Map(object):
 
+	scenes = {
+		'central_corridor': CentralCorridor(),
+		'laser_weapon_armory': LaserWeaponArmy(),
+		'the_bridge': TheBridge(),
+		'escape_pod': EscapePod(),
+		'death': Death(),
+		'Game Over!': Finished(),
+	}
+
 	def __init__(self, start_scene):
-		pass
+		self.start_scene = start_scene
 
 	def next_scene(self, scene_name):
-		pass
+		val = Map.scenes.get(scene_name)
+		return val
 
 	def opening_scene(self):
-		pass
+		return self.next_scene(self.start_scene)
 
 
-if __name__ == "__main__":
-	init_map = Map("central_corridor")
-	game = Engine(init_map)
-	game.play()
 
