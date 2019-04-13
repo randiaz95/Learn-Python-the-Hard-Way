@@ -4,7 +4,7 @@ class Parent:
     def implicit(self):
         print("PARENT implicit()")
 
-class Child:
+class Child(Parent):
     pass
 
 dad = Parent()
