@@ -1,18 +1,7 @@
-from sys import argv
 from os.path import exists
 from os import makedirs
 
-for index, arg in enumerate(argv):
-    print(index, arg)
-    if index == 0:
-        filename = arg
-    if index == 1:
-        function = arg
-    if index == 2:
-        description = arg
-
-
-class server(object):
+class Server(object):
 
     def __init__(self, content, command):
         if not exists("data"):
@@ -54,7 +43,7 @@ class server(object):
             file.close()
             return None
 
-
+"""
 operation = server(content=description, command=function)
 
 if operation.function == 'read':
@@ -68,3 +57,4 @@ if operation.function == 'delete':
 
 if operation.function == 'create':
     operation.create_file()
+"""
