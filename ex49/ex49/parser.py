@@ -1,5 +1,5 @@
 
-class Parser(Exception):
+class ParserError(Exception):
 	pass
 
 class Sentence:
@@ -59,7 +59,7 @@ def parse_subject(word_list):
 	elif next_word == "verb":
 		return ("noun", "player")
 	else:
-		raise ParserError("Expected a verb next.")
+		raise ParserError("Expected a subject next.")
 
 def parse_sentence(word_list):
 	subject = parse_subject(word_list)
@@ -72,7 +72,7 @@ def parse_sentence(word_list):
 def parse(word):
 	word_type = "error"
 
-	if word in ["north", "south", "east"]:
+	if word in ["north", "south", "east", "up"]:
 		word_type = "direction"
 	elif word in ["go", "kill", "eat"]:
 		word_type = "verb"
